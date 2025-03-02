@@ -43,7 +43,7 @@ export const getMe = async (req, res) => {
 
 export const logout = async (req, res) =>{
     try {
-        //res.cookie("jwt","",{maxAge: 0});
+        res.cookie("jwt", "", { maxAge: 0 });
         res.status(200).json({message: "Se cerro sesion exitosamente"})
     } catch (error) {
         console.log("Error en el controlador del error", error.message);

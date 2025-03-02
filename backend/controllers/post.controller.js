@@ -1,6 +1,6 @@
 import Notification from "../models/notification.model.js";
 import Post from "../models/post.model.js";
-import User from "../models/user.model.js";
+import User from "../models/user_model.js";
 import {v2 as cloudinary} from "cloudinary";
 
 
@@ -12,7 +12,7 @@ export const createPost = async (req, res) => {
 
         const user = await User.findById(userId);
         if (!user) return res.status(404).json({message:"Usuario no encontrado"})
-        if (!text && !img) return res.status(400).json({error: "El post debe tener imagen o texto"})
+        if (!text && !img) return res.status(400).json({error: "El post debe tener imagen o texto " + JSON.stringify(req.body)})
         if (img){
             const uploadedResponse = await cloudinary.uploader.upload(img);
             img = uploadedResponse.secure_url;
@@ -68,7 +68,7 @@ export const commentOnPost = async (req, res) => {
         const postId = req.params.id;
         const userId = req.user._id;
 
-        if (!texy){
+        if (!text){
             return res.status(400).json({error: "Texto es requerido"})
         }
 
